@@ -6,29 +6,53 @@ using System.Threading.Tasks;
 
 namespace OOpC_
 {
-    internal class Customer
+    internal class Customer: Person
     {
-
-        public int? Id { get; set; }
-        public required string  Name { get; set; }
-        public required string Surname { get; set; }
-        public required DateTime Dob { get; set; }
-        public string? Gender { get; set; }
-        public required string Address { get; set; }
+        public  string Address { get; set; }
         public string? PhoneNumber { get; set; }
-        public required string MAilAddress { get; set; }
-        public string? Mdp { get; set; }
+        public  string MAilAddress { get; set; }
+        public PaymentMethod? Mdp { get; set; }
 
-        public Customer(string name, string surname, DateTime dob, string address, string mAilAddress)
+        public Customer(string name, string surname, DateTime dob, string address, string mAilAddress): base(name, surname, dob.Year, dob.Month, dob.Day )
         {
-            
-            Name = name;
-            Surname = surname;
-            Dob = dob;
+           
             Address = address;
             MAilAddress = mAilAddress;
             
         }
-        public Customer() { }
+
+
+
+
+        public Customer(string name, string surname, int year, int month, int day, string address, string mAilAddress): base(name, surname, year, month, day)
+        {
+
+            Address = address;
+            MAilAddress = mAilAddress;
+
+        }
+        //public Customer() { }
+
+        public override string ToString()
+        {
+            return "Cliente: " + " " + base.ToString();
+        }
+
+        public override string Wellcome()
+        {
+            return "Benvenuto!";
+        } 
+
+        public virtual string PrintAddress()
+        {
+            return Name + " " +Surname + "\n" +  Address.Replace(", ", "\n") + "\n --------------";
+        }
+    }
+
+    public enum PaymentMethod
+    {
+        Iban,
+        Cdc,
+        Cash
     }
 }
