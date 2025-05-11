@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace OOpC_
 {
-    internal class Transaction
-    {
-       
-        public int Amount {  get; set; }
-        public DateTime OperationDate { get; set; }
-
-        public Transaction(int amount, DateTime operationDate)
+        internal class Transaction
         {
-            Amount = amount;
-            OperationDate = operationDate;
+            public decimal Amount { get; set; }
+            public DateTime OperationDate { get; set; }
+            public string Description { get; set; } = "Operazione";
+
+            public Transaction(decimal amount, string description = null)
+            {
+                Amount = amount;
+                OperationDate = DateTime.Now;
+                Description = description ?? Description;
+            }
         }
-    }
-}
+ }
+

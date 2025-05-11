@@ -1,11 +1,45 @@
-﻿using static OOpC_.Employee;
+﻿using System.Transactions;
+using static OOpC_.Employee;
+
+
 
 namespace OOpC_
 {
     internal class Program
     {
+
+
+        private static void EseguiOperazioni(BankAccount account)
+        {
+            while (true) // Loop infinito (fino a exit)
+            {
+                Console.WriteLine("\nOperazioni disponibili:");
+                Console.WriteLine("1 - Deposito/Prelievo");
+                Console.WriteLine("2 - Visualizza saldo");
+                Console.WriteLine("3 - Esci");
+                Console.Write("Scelta: ");
+
+                var scelta = Console.ReadLine();
+
+                switch (scelta)
+                {
+                    case "1":
+                        account.BankingMovement();
+                        break;
+                    case "2":
+                        Console.WriteLine($"\nSaldo attuale: {account.Balance:C}");
+                        break;
+                    case "3":
+                        return; // Esce dal metodo
+                    default:
+                        Console.WriteLine("Scelta non valida!");
+                        break;
+                }
+            }
+        }
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             DateTime dob1 = new DateTime(2000, 12, 3);
             var c1 = new Customer("Pippo", "Depippis", dob1, "via Gramsci, Genova 16123, Italy", "pippothereal@topoliniamail.to");
             c1.Mdp = PaymentMethod.Iban;
@@ -18,7 +52,7 @@ namespace OOpC_
             //var p1 = new Person("NonEsisto", "PerLaBanca", new DateTime(1984, 3, 20);  non posso crearlo perche Person è abstract
 
 
-            Console.WriteLine(c1);
+            //Console.WriteLine(c1);
 
             var v1 = new VipCustomer("Topolino", "Mouse", 1990, 1, 25, "via Cantore, Genova 16123, Italy", "topo_lino@topoliniamail.to", 1555);
 
@@ -32,11 +66,11 @@ namespace OOpC_
             customers.Add(c3);
             customers.Add(v1);
 
-            foreach (var customer in customers)
-            {
-                //Console.WriteLine(customer.ToString());
-                Console.WriteLine(customer.PrintAddress());
-            }
+            //foreach (var customer in customers)
+            //{
+            //    //Console.WriteLine(customer.ToString());
+            //    Console.WriteLine(customer.PrintAddress());
+            //}
 
             List<Person> persons = new List<Person>();
 
@@ -44,11 +78,43 @@ namespace OOpC_
             persons.Add(c2);
             persons.Add(v1);
 
-            foreach (var person in persons)
+            //foreach (var person in persons)
+            //{
+            //    Console.WriteLine(person.Wellcome());
+            //}
+
+
+            var t1 = new Transaction(2000);
+            var t2 = new Transaction(-200);
+            var t3 = new Transaction(2000);
+            var ab1 = new BankAccount(c1, e1, 2022, 02, 20, new List<Transaction>(), 20000);
+            var ab2 = new CashBackAb(c2, e1, 2018, 04, 20, new List<Transaction>(), 15000);
+            var ab3 = new SaveAb(c3, e1, 2018, 06, 21, new List<Transaction>(), 10550);
+
+            List<BankAccount> bankaccounts = new List<BankAccount>();
+            bankaccounts.Add(ab1);
+            bankaccounts.Add(ab2);
+            bankaccounts.Add(ab3);
+
+            foreach (var bankaccount in bankaccounts)
             {
-                Console.WriteLine(person.Wellcome());
+                Console.WriteLine(bankaccount.ToString());
             }
 
+
+
+            BankAccount accountDiProva = ab1;
+            BankAccount CashBackAccount = ab2;
+            BankAccount SaveAccount = ab3;
+
+            //attiva per provare funzione BaseAccount
+            //accountDiProva.BankingMovement();
+
+            //attiva per provare funzione CashBackAccount
+            //CashBackAccount.BankingMovement();
+
+            //attiva per provare funzione SaveAb
+            SaveAccount.BankingMovement();
         }
     }
 }
