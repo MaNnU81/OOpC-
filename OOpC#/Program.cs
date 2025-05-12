@@ -81,10 +81,10 @@ namespace OOpC_
             //accountDiProva.BankingMovement();
 
             //attiva per provare funzione CashBackAccount
-            //CashBackAccount.BankingMovement();
+            CashBackAccount.BankingMovement();
 
             //attiva per provare funzione SaveAb
-            SaveAccount.BankingMovement();
+            /*SaveAccount.BankingMovement()*/;
         }
     }
 }

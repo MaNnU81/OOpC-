@@ -40,7 +40,7 @@ namespace OOpC_
 
             while (!inputValido)
             {
-                Console.Write("Inserisci la cifra depositata/prelevata (usa . per decimali): \"");
+                Console.Write("Inserisci la cifra depositata/prelevata (usa . per decimali):");
                 string input = Console.ReadLine();
 
                 if (!decimal.TryParse(input, out numeroIput))
